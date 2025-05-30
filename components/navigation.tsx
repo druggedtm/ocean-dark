@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
-import { Menu, Sun, Moon, Anchor, Ship, Scale, Users, Newspaper, LifeBuoy } from "lucide-react"
+import { Menu, Sun, Moon, Anchor, Users, LifeBuoy, Globe, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Image from "next/image";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -21,43 +22,41 @@ export default function Navigation() {
   }, [])
 
   const navItems = [
-    { name: "Technical Supervision", href: "#technical", icon: <Ship className="h-4 w-4 mr-2" /> },
-    { name: "Insurance", href: "#insurance", icon: <LifeBuoy className="h-4 w-4 mr-2" /> },
-    { name: "Law", href: "#law", icon: <Scale className="h-4 w-4 mr-2" /> },
+    { name: "About us", href: "#aboutus", icon: <Anchor className="h-4 w-4 mr-2" /> },
+    { name: "Why choose us", href: "#why-us", icon: <LifeBuoy className="h-4 w-4 mr-2" /> },
+    { name: "Services", href: "#services", icon: <Globe className="h-4 w-4 mr-2" /> },
     { name: "Team", href: "#team", icon: <Users className="h-4 w-4 mr-2" /> },
-    { name: "News", href: "#news", icon: <Newspaper className="h-4 w-4 mr-2" /> },
+    { name: "Contact", href: "#contact", icon: <Phone className="h-4 w-4 mr-2" /> },
   ]
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 dark:bg-black-950/95 backdrop-blur-md shadow-lg border-b border-orange-500/20"
-          : "bg-black-900/20 backdrop-blur-sm"
-      }`}
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled
+        ? "bg-white/95 dark:bg-black-950/95 backdrop-blur-md shadow-lg border-b border-orange-500/20"
+        : "bg-black-900/20 backdrop-blur-sm"
+        }`}
     >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-4  flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <div className="relative">
-            <Anchor className="h-8 w-8 text-orange-500" />
-            <div className="absolute inset-0 bg-orange-500/20 rounded-full animate-ripple"></div>
+          <div className="relative h-32 w-32">
+            <Image
+              src="/2.png"
+              alt="Oceanic Advisors Logo"
+              fill
+              className="object-contain rounded-full"
+              priority
+            />
           </div>
-          <span className="font-bold text-xl">
-            <span className={isScrolled ? "text-orange-600 dark:text-orange-400" : "text-orange-500"}>Oceanic</span>
-            <span className={isScrolled ? "text-slate-700 dark:text-slate-200" : "text-white"}>Advisors</span>
-          </span>
         </Link>
-
         <div className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center text-sm font-medium transition-colors ${
-                isScrolled
-                  ? "text-slate-700 hover:text-orange-600 dark:text-slate-200 dark:hover:text-orange-400"
-                  : "text-white/90 hover:text-orange-400"
-              }`}
+              className={`flex items-center text-sm font-medium transition-colors ${isScrolled
+                ? "text-slate-700 hover:text-orange-600 dark:text-slate-200 dark:hover:text-orange-400"
+                : "text-white/90 hover:text-orange-400"
+                }`}
             >
               {item.icon}
               {item.name}
@@ -65,11 +64,10 @@ export default function Navigation() {
           ))}
 
           <Button
-            className={`rounded-full px-6 ${
-              isScrolled
-                ? "bg-orange-600 hover:bg-orange-700 text-white"
-                : "bg-orange-500 hover:bg-orange-600 text-white shadow-lg"
-            }`}
+            className={`rounded-full px-6 ${isScrolled
+              ? "bg-orange-600 hover:bg-orange-700 text-white"
+              : "bg-orange-500 hover:bg-orange-600 text-white shadow-lg"
+              }`}
           >
             Request Advisory
           </Button>

@@ -5,6 +5,7 @@ import Services from "@/components/services"
 import Team from "@/components/team"
 import Footer from "@/components/footer"
 import ContactCTA from "@/components/contact-cta"
+import WhyUs from "@/components/whyus"
 
 export default function HomePage() {
   return (
@@ -13,6 +14,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <About />
+        <WhyUs />
         <Services />
         <Team />
         <ContactCTA />

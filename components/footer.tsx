@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Anchor, Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, Ship, Compass } from "lucide-react"
+import { Anchor, Mail, Phone, MapPin, Ship, Compass, Linkedin } from "lucide-react"
+import { Radar } from '@/components/Radar'
 
 export default function Footer() {
   return (
@@ -11,56 +12,33 @@ export default function Footer() {
       <div className="absolute top-20 right-10 opacity-5">
         <Ship className="h-40 w-40 text-white" />
       </div>
-      <div className="absolute bottom-20 left-10 opacity-5">
-        <Compass className="h-40 w-40 text-white compass-animation" />
+      <div className="absolute bottom-0 left-0 w-full z-10">
+        <Radar />
       </div>
+
 
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="relative">
-                <Anchor className="h-10 w-10 text-orange-500" />
-                <div className="absolute inset-0 bg-orange-500/20 rounded-full animate-ripple"></div>
-              </div>
-              <span className="font-bold text-2xl">
-                <span className="text-orange-500">Oceanic</span>
-                <span className="text-white/80">Advisors</span>
-              </span>
+            <div className="mb-6">
+              <img src="/1.png" alt="Oceanic Advisors Logo" className="h-25 w-auto" />
             </div>
+
             <p className="text-slate-400 mb-6 border-l-2 border-orange-500 pl-4">
               Expert advisors in maritime strategy, risk management, and sustainable solutions for the ocean economy.
               Guiding businesses towards responsible growth.
             </p>
             <div className="flex space-x-4">
+
               <a
-                href="#"
-                className="bg-black-800 hover:bg-orange-600 p-2 rounded-full transition-colors duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5 text-white" />
-              </a>
-              <a
-                href="#"
-                className="bg-black-800 hover:bg-orange-600 p-2 rounded-full transition-colors duration-300"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5 text-white" />
-              </a>
-              <a
-                href="#"
+                href="https://www.linkedin.com/company/oceanic-advisors/"
                 className="bg-black-800 hover:bg-orange-600 p-2 rounded-full transition-colors duration-300"
                 aria-label="LinkedIn"
+                target="_blank"
               >
                 <Linkedin className="h-5 w-5 text-white" />
               </a>
-              <a
-                href="#"
-                className="bg-black-800 hover:bg-orange-600 p-2 rounded-full transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5 text-white" />
-              </a>
+
             </div>
           </div>
 

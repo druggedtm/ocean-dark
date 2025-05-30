@@ -151,7 +151,7 @@ export default function Services() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Why Choose Us Section */}
-        <div className="mb-16 max-w-3xl mx-auto text-center bg-gradient-to-br from-orange-50/80 to-orange-100/60 dark:from-black-900/80 dark:to-black-800/60 rounded-2xl p-10 shadow-xl border-l-8 border-orange-500 animate-on-scroll">
+        {/* <div className="mb-16 max-w-3xl mx-auto text-center bg-gradient-to-br from-orange-50/80 to-orange-100/60 dark:from-black-900/80 dark:to-black-800/60 rounded-2xl p-10 shadow-xl border-l-8 border-orange-500 animate-on-scroll">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-slate-800 dark:text-slate-100">Why Choose Oceanic Advisors</h2>
           <ul className="space-y-5 text-left">
             {[
@@ -169,7 +169,7 @@ export default function Services() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center p-2 bg-orange-50 dark:bg-orange-900/30 rounded-full mb-4">

@@ -74,7 +74,7 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="py-24 bg-white dark:bg-black-950 relative overflow-hidden" ref={sectionRef}>
+    <section id="aboutus" className="py-24 bg-white dark:bg-black-950 relative overflow-hidden" ref={sectionRef}>
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-20 wave-bg opacity-10"></div>
       <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-orange-100 dark:bg-orange-900/20 blur-3xl"></div>
@@ -131,7 +131,7 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-black-600/20 rounded-2xl transform rotate-3"></div>
               <div className="relative bg-white dark:bg-black-800 p-2 rounded-2xl shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=500&width=600"
+                  src="/marine.jpg"
                   alt="Oceanic Advisors Maritime Operations"
                   width={600}
                   height={500}

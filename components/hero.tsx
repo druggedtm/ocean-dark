@@ -57,17 +57,25 @@ export default function Hero() {
     <div className="relative w-full h-screen overflow-hidden aurora-bg">
       {/* Ocean Background */}
       {isLoaded && <RealisticOceanBackground />}
-      
+
       {/* Modern UI Overlay */}
       {isLoaded && <ModernOverlay />}
 
       {/* Content overlay */}
       <div className="relative z-30 container mx-auto px-4 h-full flex flex-col justify-center">
         <div ref={containerRef} className="max-w-3xl">
-          <h1 className="hero-title text-4xl md:text-6xl font-bold mb-6 cosmic-text-gradient animate-holographic-shimmer drop-shadow-lg">
-            Navigate the Future of Maritime Logistics
+
+          <h1 className="hero-title text-4xl md:text-6xl font-bold mb-6">
+            <span className="inline-block text-foreground bg-orange-600 px-3 py-2 rounded mb-2">
+              Navigate the Future
+            </span>
+            <br />
+            <span className="inline-block text-foreground bg-orange-600 px-3 py-2 rounded">
+              of Maritime Logistics
+            </span>
           </h1>
-          <p className="hero-description text-xl md:text-2xl text-foreground/90 mb-8 drop-shadow-md">
+
+          <p className="hero-description text-xl md:text-2xl text-white mb-8 drop-shadow-md">
             End-to-end technical supervision, compliance, and operational support for ship owners and managers worldwide.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-4">
