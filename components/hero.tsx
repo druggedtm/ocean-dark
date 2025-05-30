@@ -68,7 +68,7 @@ export default function Hero() {
             Navigate the Future of Maritime Logistics
           </h1>
           <p className="hero-description text-xl md:text-2xl text-foreground/90 mb-8 drop-shadow-md">
-            Streamline your shipping operations with our cutting-edge logistics platform
+            End-to-end technical supervision, compliance, and operational support for ship owners and managers worldwide.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-4">
             <Button size="lg" className="btn-primary-cosmic">

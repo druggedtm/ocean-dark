@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Script from 'next/script'
+import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
   title: 'v0 App',
@@ -14,15 +15,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
-          strategy="beforeInteractive"
-        />
-        <Script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/simplex-noise.min.js" strategy="beforeInteractive" />
-
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+            strategy="afterInteractive"
+          />
+          <Script 
+            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/simplex-noise.min.js" 
+            strategy="afterInteractive"
+          />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

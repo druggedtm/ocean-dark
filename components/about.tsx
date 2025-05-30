@@ -88,8 +88,7 @@ export default function About() {
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">About Oceanic Advisors</h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            A team of highly skilled Master Mariners and Chief Engineers bringing maritime excellence to the global
-            shipping industry
+            Oceanic Advisors was founded to bridge the operational gap between ship owners, classification societies, and port-based services — with deep-rooted technical expertise at sea and onshore.
           </p>
         </div>
 

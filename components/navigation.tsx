@@ -71,7 +71,7 @@ export default function Navigation() {
                 : "bg-orange-500 hover:bg-orange-600 text-white shadow-lg"
             }`}
           >
-            Get Consultation
+            Request Advisory
           </Button>
 
           <Button
@@ -121,7 +121,7 @@ export default function Navigation() {
                   </Link>
                 ))}
                 <Button className="mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white rounded-full">
-                  Get Consultation
+                  Request Advisory
                 </Button>
               </div>
             </SheetContent>
