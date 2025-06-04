@@ -12,9 +12,9 @@ export default function Footer() {
       <div className="absolute top-20 right-10 opacity-5">
         <Ship className="h-40 w-40 text-white" />
       </div>
-      <div className="absolute bottom-0 left-0 w-full z-10">
+      {/* <div className="absolute bottom-0 left-0 w-full z-10">
         <Radar />
-      </div>
+      </div> */}
 
 
       <div className="container mx-auto px-4 py-16 relative z-10">

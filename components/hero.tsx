@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { gsap } from "gsap"
-import { Rocket, Stars, Navigation, Sparkles } from "lucide-react"
+import { Rocket, Stars } from "lucide-react"
 import RealisticOceanBackground from "./realistic-ocean-background"
 import ModernOverlay from "./modern-overlay"
 
@@ -89,23 +89,6 @@ export default function Hero() {
             </Button>
           </div>
         </div>
-      </div>
-
-      {/* Cosmic Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              '--particle-x': `${Math.random() * 200 - 100}px`,
-              '--particle-y': `${Math.random() * -200 - 50}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`
-            } as React.CSSProperties}
-          />
-        ))}
       </div>
     </div>
   )

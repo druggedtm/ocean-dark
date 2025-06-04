@@ -24,7 +24,7 @@ export default function RootLayout({
           />
           <Script 
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/simplex-noise.min.js" 
-            strategy="afterInteractive"
+            strategy="beforeInteractive"
           />
           {children}
         </ThemeProvider>

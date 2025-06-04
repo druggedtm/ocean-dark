@@ -22,7 +22,7 @@
     --destructive-foreground: 0 0% 100%;
     --border: 210 50% 85%; /* Light blue-gray for borders */
     --input: 210 50% 88%;
-    --ring: 270 80% 65%; /* Brighter purple for rings */
+    /* --ring: 270 80% 65%; Brighter purple for rings */
     --radius: 0.5rem;
   }
 
@@ -55,10 +55,9 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    overflow-x: hidden; /* Prevent horizontal scroll from some full-width animations */
+    overflow-x: hidden; 
   }
 
-  /* Add a subtle animated gradient background to the body for a cosmic feel */
   body::before {
     content: "";
     position: fixed;
@@ -69,7 +68,7 @@
     z-index: -10; /* Ensure it's behind everything */
     background: linear-gradient(
       -45deg,
-      hsl(var(--background) / 0.9), /* Slightly transparent base */
+      hsl(var(--background) / 0.9),
       hsl(var(--secondary) / 0.1),
       hsl(var(--primary) / 0.05),
       hsl(var(--accent) / 0.1)
@@ -219,7 +218,7 @@
   position: relative;
   overflow: hidden;
 }
-
+/* 
 .cosmic-dust-bg::before {
   content: "";
   position: absolute;
@@ -233,8 +232,8 @@
     radial-gradient(ellipse at center, hsl(var(--secondary) / 0.1) 0%, transparent 40%);
   background-size: 300% 300%, 200% 200%, 150% 150%;
   animation: cosmic-flow 20s ease-in-out infinite alternate;
-  opacity: 0.5; /* Keep it subtle */
-}
+  opacity: 0.5; 
+} */
 
 @keyframes cosmic-flow {
   0% { background-position: 0% 0%, 100% 100%, 50% 50%; }
@@ -387,7 +386,7 @@
   );
   background-size: 300% 300%;
   animation: aurora-flow 15s ease-in-out infinite alternate;
-  opacity: 0.6; /* Adjust for subtlety */
+  opacity: 0.6; 
 }
 
 @keyframes aurora-flow {
