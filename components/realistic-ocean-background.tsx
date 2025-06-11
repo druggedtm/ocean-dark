@@ -23,7 +23,7 @@ const RealisticOceanBackground = () => {
     // Create framebuffers for multi-pass rendering
     const bufferAFramebuffer = gl.createFramebuffer()
     const bufferATexture = gl.createTexture()
-    
+
     // Shader sources
     const vertexShaderSource = `#version 300 es
       in vec4 aPosition;
@@ -63,9 +63,9 @@ const RealisticOceanBackground = () => {
           vec2 f = fract( p );	
           vec2 u = f * f * (3.0-2.0 * f);
           return mix( mix( hash( i + vec2(0.0,0.0) ), 
-                           hash( i + vec2(1.0,0.0) ), u.x),
-                      mix( hash( i + vec2(0.0,1.0) ), 
-                           hash( i + vec2(1.0,1.0) ), u.x), u.y);
+                            hash( i + vec2(1.0,0.0) ), u.x),
+                       mix( hash( i + vec2(0.0,1.0) ), 
+                            hash( i + vec2(1.0,1.0) ), u.x), u.y);
       }
       
       float wv(in vec2 uv, vec2 d, float t, float A)
@@ -463,7 +463,7 @@ const RealisticOceanBackground = () => {
     function setupFramebuffer(width: number, height: number) {
       // Set up Buffer A texture
       gl.bindTexture(gl.TEXTURE_2D, bufferATexture)
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, width, height, 0, gl.RGBA, gl.FLOAT, null)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -477,67 +477,177 @@ const RealisticOceanBackground = () => {
       const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER)
       if (status !== gl.FRAMEBUFFER_COMPLETE) {
         console.error("Framebuffer not complete:", status)
+        // Fall back to RGBA8 if RGBA32F is not supported
+        gl.bindTexture(gl.TEXTURE_2D, bufferATexture)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null)
+        gl.bindFramebuffer(gl.FRAMEBUFFER, bufferAFramebuffer)
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, bufferATexture, 0)
+        
+        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+          console.error("Framebuffer still not complete after fallback")
+        }
       }
 
       // Unbind framebuffer
       gl.bindFramebuffer(gl.FRAMEBUFFER, null)
     }
 
-    // Load textures
-    const textureUrls = [
-      "https://cdn.jsdelivr.net/gh/martinlaxenaire/gpu-curtains/examples/assets/displacement.jpg", // iChannel0
-      "https://cdn.jsdelivr.net/gh/martinlaxenaire/gpu-curtains/examples/assets/cube-map.jpg",     // iChannel1
-      "https://raw.githubusercontent.com/martinlaxenaire/gpu-curtains/master/examples/assets/normal.jpg", // iChannel2
-      "https://raw.githubusercontent.com/martinlaxenaire/gpu-curtains/master/examples/assets/noise.jpg"   // iChannel3
-    ]
-
-    const textures: WebGLTexture[] = []
-    let texturesLoaded = 0
-
-    function loadTexture(url: string, index: number) {
-      const texture = gl.createTexture()
-      if (!texture) {
-        console.error("Failed to create texture")
-        return
-      }
-
-      textures[index] = texture
-
-      // Initialize with a 1x1 placeholder until the image loads
-      gl.bindTexture(gl.TEXTURE_2D, texture)
-      gl.texImage2D(
-        gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-        new Uint8Array([0, 0, 0, 255])
-      )
-
-      // Load the actual texture
-      const image = new Image()
-      image.crossOrigin = "anonymous"
-      image.onload = () => {
-        gl.bindTexture(gl.TEXTURE_2D, texture)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+    // Create procedural textures
+    function createProceduralTextures() {
+      const textures: WebGLTexture[] = []
+      
+      // Create displacement texture (iChannel0) - noise pattern
+      const displacementTexture = gl.createTexture()
+      if (displacementTexture) {
+        gl.bindTexture(gl.TEXTURE_2D, displacementTexture)
+        const displacementSize = 512
+        const displacementData = new Uint8Array(displacementSize * displacementSize * 4)
+        
+        for (let y = 0; y < displacementSize; y++) {
+          for (let x = 0; x < displacementSize; x++) {
+            const i = (y * displacementSize + x) * 4
+            
+            // Perlin-like noise
+            const nx = x / displacementSize
+            const ny = y / displacementSize
+            let v = 0
+            
+            // Multiple octaves
+            for (let o = 1; o <= 4; o++) {
+              const freq = Math.pow(2, o)
+              const amp = Math.pow(0.5, o)
+              const vx = Math.sin(nx * freq * Math.PI * 2) * amp
+              const vy = Math.sin(ny * freq * Math.PI * 2) * amp
+              v += (vx + vy) * 0.5
+            }
+            
+            v = (v + 1) * 0.5 // Normalize to 0-1
+            
+            displacementData[i] = v * 255
+            displacementData[i + 1] = v * 255
+            displacementData[i + 2] = v * 255
+            displacementData[i + 3] = 255
+          }
+        }
+        
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, displacementSize, displacementSize, 0, gl.RGBA, gl.UNSIGNED_BYTE, displacementData)
         gl.generateMipmap(gl.TEXTURE_2D)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
-
-        texturesLoaded++
-        if (texturesLoaded === textureUrls.length) {
-          texturesLoadedRef.current = true
-          console.log("All textures loaded")
+        textures[0] = displacementTexture
+      }
+      
+      // Create reflection texture (iChannel1) - sky gradient
+      const reflectionTexture = gl.createTexture()
+      if (reflectionTexture) {
+        gl.bindTexture(gl.TEXTURE_2D, reflectionTexture)
+        const reflectionSize = 256
+        const reflectionData = new Uint8Array(reflectionSize * reflectionSize * 4)
+        
+        for (let y = 0; y < reflectionSize; y++) {
+          for (let x = 0; x < reflectionSize; x++) {
+            const i = (y * reflectionSize + x) * 4
+            const ny = y / reflectionSize
+            
+            // Sky gradient
+            const skyBlue = [135, 206, 235]
+            const deepBlue = [0, 0, 139]
+            
+            reflectionData[i] = Math.round(deepBlue[0] * ny + skyBlue[0] * (1 - ny))
+            reflectionData[i + 1] = Math.round(deepBlue[1] * ny + skyBlue[1] * (1 - ny))
+            reflectionData[i + 2] = Math.round(deepBlue[2] * ny + skyBlue[2] * (1 - ny))
+            reflectionData[i + 3] = 255
+          }
         }
+        
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, reflectionSize, reflectionSize, 0, gl.RGBA, gl.UNSIGNED_BYTE, reflectionData)
+        gl.generateMipmap(gl.TEXTURE_2D)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+        textures[1] = reflectionTexture
       }
-      image.onerror = () => {
-        console.error("Failed to load texture:", url)
+      
+      // Create normal map texture (iChannel2)
+      const normalTexture = gl.createTexture()
+      if (normalTexture) {
+        gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+        const normalSize = 512
+        const normalData = new Uint8Array(normalSize * normalSize * 4)
+        
+        for (let y = 0; y < normalSize; y++) {
+          for (let x = 0; x < normalSize; x++) {
+            const i = (y * normalSize + x) * 4
+            
+            // Create normal map with some variation
+            const nx = x / normalSize * 20
+            const ny = y / normalSize * 20
+            
+            // Generate normals from multiple sine waves
+            const dx = Math.cos(nx * Math.PI) * 0.5 + Math.cos(nx * 3 * Math.PI) * 0.25 + Math.cos(nx * 7 * Math.PI) * 0.125
+            const dy = Math.cos(ny * Math.PI) * 0.5 + Math.cos(ny * 3 * Math.PI) * 0.25 + Math.cos(ny * 7 * Math.PI) * 0.125
+            
+            // Convert to normal vector
+            const length = Math.sqrt(dx * dx + dy * dy + 1)
+            const nx_norm = dx / length * 0.5 + 0.5
+            const ny_norm = dy / length * 0.5 + 0.5
+            const nz_norm = 1 / length * 0.5 + 0.5
+            
+            normalData[i] = nx_norm * 255
+            normalData[i + 1] = ny_norm * 255
+            normalData[i + 2] = nz_norm * 255
+            normalData[i + 3] = 255
+          }
+        }
+        
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, normalSize, normalSize, 0, gl.RGBA, gl.UNSIGNED_BYTE, normalData)
+        gl.generateMipmap(gl.TEXTURE_2D)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+        textures[2] = normalTexture
       }
-      image.src = url
+      
+      // Create noise texture (iChannel3)
+      const noiseTexture = gl.createTexture()
+      if (noiseTexture) {
+        gl.bindTexture(gl.TEXTURE_2D, noiseTexture)
+        const noiseSize = 256
+        const noiseData = new Uint8Array(noiseSize * noiseSize * 4)
+        
+        for (let y = 0; y < noiseSize; y++) {
+          for (let x = 0; x < noiseSize; x++) {
+            const i = (y * noiseSize + x) * 4
+            
+            // Random noise
+            const v = Math.random()
+            
+            noiseData[i] = v * 255
+            noiseData[i + 1] = v * 255
+            noiseData[i + 2] = v * 255
+            noiseData[i + 3] = 255
+          }
+        }
+        
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, noiseSize, noiseSize, 0, gl.RGBA, gl.UNSIGNED_BYTE, noiseData)
+        gl.generateMipmap(gl.TEXTURE_2D)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+        textures[3] = noiseTexture
+      }
+      
+      texturesLoadedRef.current = true
+      return textures
     }
 
-    // Load all textures
-    textureUrls.forEach((url, index) => {
-      loadTexture(url, index)
-    })
+    // Create procedural textures
+    const textures = createProceduralTextures()
 
     // Mouse tracking
     let mouseX = 0, mouseY = 0
