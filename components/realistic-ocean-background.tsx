@@ -60,7 +60,8 @@ const RealisticOceanBackground = () => {
           float value = 0.0;
           float amplitude = 0.5;
           float totalAmplitude = 0.0;
-          for (int i = 0; i < 4; i++) {
+          // Reduced from 4 to 2 octaves for performance
+          for (int i = 0; i < 2; i++) {
               value += amplitude * noise(p); // noise() is already defined
               totalAmplitude += amplitude;
               p *= 2.0; // Increase frequency
@@ -108,10 +109,10 @@ const RealisticOceanBackground = () => {
           
           f*=.5;
           f += proc_base_noise_for_fbm(uv*2.0) * 0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*4.0) * 0.5*0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*32.0) * 0.5*0.5*0.5*0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*8.0) * 0.5*0.5*0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*64.0) * 0.5*0.5*0.5*0.5*0.5;
+          // Removed additional noise layers for performance
+          // f += proc_base_noise_for_fbm(uv*32.0) * 0.5*0.5*0.5*0.5*0.5;
+          // f += proc_base_noise_for_fbm(uv*8.0) * 0.5*0.5*0.5*0.5;
+          // f += proc_base_noise_for_fbm(uv*64.0) * 0.5*0.5*0.5*0.5*0.5;
           return f;
       }
 
@@ -119,8 +120,9 @@ const RealisticOceanBackground = () => {
       {	
           float f =  proc_base_noise_for_fbm(uv) * 0.5; // Replacement for iChannel2
           f += proc_base_noise_for_fbm(uv*2.0) * 0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*4.0) * 0.5*0.5*0.5;
-          f += proc_base_noise_for_fbm(uv*8.0) * 0.5*0.5*0.5*0.5;
+          // Removed additional noise layers for performance
+          // f += proc_base_noise_for_fbm(uv*4.0) * 0.5*0.5*0.5;
+          // f += proc_base_noise_for_fbm(uv*8.0) * 0.5*0.5*0.5*0.5;
           f = f*f*f*f;
           return f;
       }
@@ -216,7 +218,8 @@ const RealisticOceanBackground = () => {
           bool hit = false;
           float dist = 0.0;
           
-          for (int i = 0; i < 55; ++i) {
+          // Reduced from 55 to 30 iterations for performance
+          for (int i = 0; i < 30; ++i) {
               float travelledSq=dot(ro-rp, ro-rp);
               dist = mapLo(rp);
               if(dist < 0.01) { hit = true; break; }
@@ -224,7 +227,8 @@ const RealisticOceanBackground = () => {
               if(travelledSq > 9000.0) break;
           }
           
-          for (int i = 0; i < 10; ++i) {
+          // Reduced from 10 to 5 iterations for performance
+          for (int i = 0; i < 5; ++i) {
               dist = map(rp); // Calculate dist based on current rp
               if (abs(dist) < 0.0001) break;
               rp += dist * rd; // Then step
