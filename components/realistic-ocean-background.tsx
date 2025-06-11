@@ -146,10 +146,11 @@ const RealisticOceanBackground = () => {
           float w4 = wv(nuv2 * 170.0, vec2( 0.1, 0.6) , t * 6.,  A) * 0.03;
           float w7 = wv(nuv2 * 570.0, vec2( 0.05, 0.4), t * 15., A) * 0.02;
           float w8 = wv(nuv2 * 570.0, vec2( -0.05, 0.3) , t * 15.,  A) * 0.02;
-          float w5 = -wv(nuv2 * 1670.0, vec2(-0.1, 0.4), t * 63., A) * 0.007;
-          float w6 = -wv(nuv2 * 1670.0, vec2( 0.1, 0.5) ,  t * 63.,  A) * 0.007;
+          // Removed highest frequency wave details w5 and w6 for performance
+          // float w5 = -wv(nuv2 * 1670.0, vec2(-0.1, 0.4), t * 63., A) * 0.007;
+          // float w6 = -wv(nuv2 * 1670.0, vec2( 0.1, 0.5) ,  t * 63.,  A) * 0.007;
           
-          return wavesLo(rp, t, A, 0.0) +w3+w4+w7+w8+w5+w6;
+          return wavesLo(rp, t, A, 0.0) +w3+w4+w7+w8;
       }
 
       float mapLo(in vec3 rp) { return rp.y - wavesLo(rp, 2.0+iTime*.5, .04, 4.0); }
@@ -218,8 +219,18 @@ const RealisticOceanBackground = () => {
           bool hit = false;
           float dist = 0.0;
           
-          // Reduced from 55 to 30 iterations for performance
-          for (int i = 0; i < 30; ++i) {
+          // Reduced max ray distance
+          float tm = 0.0;
+          float tx = 300.0; // Reduced from 1000.0 to 300.0
+          float hx = map(ro + rd * tx);
+          if(hx > 0.0) {
+              rp = ro + rd * tx;
+              return;   
+          }
+          float hm = map(ro);
+          
+          // Reduced from 30 to 20 iterations for performance
+          for (int i = 0; i < 20; ++i) {
               float travelledSq=dot(ro-rp, ro-rp);
               dist = mapLo(rp);
               if(dist < 0.01) { hit = true; break; }
@@ -227,8 +238,8 @@ const RealisticOceanBackground = () => {
               if(travelledSq > 9000.0) break;
           }
           
-          // Reduced from 10 to 5 iterations for performance
-          for (int i = 0; i < 5; ++i) {
+          // Reduced from 5 to 3 iterations for performance
+          for (int i = 0; i < 3; ++i) {
               dist = map(rp); // Calculate dist based on current rp
               if (abs(dist) < 0.0001) break;
               rp += dist * rd; // Then step
