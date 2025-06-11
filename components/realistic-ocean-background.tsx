@@ -60,8 +60,8 @@ const RealisticOceanBackground = () => {
           float value = 0.0;
           float amplitude = 0.5;
           float totalAmplitude = 0.0;
-          // Reduced from 4 to 2 octaves for performance
-          for (int i = 0; i < 2; i++) {
+          // Increased from 2 to 3 octaves for better detail
+          for (int i = 0; i < 3; i++) {
               value += amplitude * noise(p); // noise() is already defined
               totalAmplitude += amplitude;
               p *= 2.0; // Increase frequency
@@ -221,7 +221,7 @@ const RealisticOceanBackground = () => {
           
           // Reduced max ray distance
           float tm = 0.0;
-          float tx = 300.0; // Reduced from 1000.0 to 300.0
+          float tx = 75.0; // Reduced from 300.0 to 75.0 for closer view
           float hx = map(ro + rd * tx);
           if(hx > 0.0) {
               rp = ro + rd * tx;
@@ -229,8 +229,8 @@ const RealisticOceanBackground = () => {
           }
           float hm = map(ro);
           
-          // Reduced from 30 to 20 iterations for performance
-          for (int i = 0; i < 20; ++i) {
+          // Increased from 20 to 25 iterations for better detail in closer view
+          for (int i = 0; i < 25; ++i) {
               float travelledSq=dot(ro-rp, ro-rp);
               dist = mapLo(rp);
               if(dist < 0.01) { hit = true; break; }
@@ -238,8 +238,8 @@ const RealisticOceanBackground = () => {
               if(travelledSq > 9000.0) break;
           }
           
-          // Reduced from 5 to 3 iterations for performance
-          for (int i = 0; i < 3; ++i) {
+          // Increased from 3 to 4 iterations for better detail
+          for (int i = 0; i < 4; ++i) {
               dist = map(rp); // Calculate dist based on current rp
               if (abs(dist) < 0.0001) break;
               rp += dist * rd; // Then step
