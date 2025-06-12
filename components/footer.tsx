@@ -9,10 +9,14 @@ import {
   Linkedin,
   ChevronRight,
 } from "lucide-react"
+import WaveCanvas from "@/components/WaveCanvas"
 
 export default function Footer() {
   return (
     <footer className="bg-black-950 text-white relative overflow-hidden">
+      {/* Animated wave background */}
+      <WaveCanvas />
+
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 opacity-5">
         <Ship className="h-40 w-40 text-white" />
