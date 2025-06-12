@@ -1,20 +1,26 @@
 import Link from "next/link"
-import { Anchor, Mail, Phone, MapPin, Ship, Compass, Linkedin } from "lucide-react"
-import { Radar } from '@/components/Radar'
+import {
+  Anchor,
+  Mail,
+  Phone,
+  MapPin,
+  Ship,
+  Compass,
+  Linkedin,
+  ChevronRight,
+} from "lucide-react"
+import WaveCanvas from "@/components/WaveCanvas"
 
 export default function Footer() {
   return (
     <footer className="bg-black-950 text-white relative overflow-hidden">
-      {/* Decorative wave background */}
-      <div className="absolute top-0 left-0 w-full h-20 wave-bg opacity-10"></div>
+      {/* Animated wave background */}
+      <WaveCanvas />
 
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 opacity-5">
         <Ship className="h-40 w-40 text-white" />
       </div>
-      {/* <div className="absolute bottom-0 left-0 w-full z-10">
-        <Radar />
-      </div> */}
 
 
       <div className="container mx-auto px-4 py-16 relative z-10">
@@ -56,7 +62,7 @@ export default function Footer() {
                   href="#technical"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Technical Supervision
                 </Link>
               </li>
@@ -65,13 +71,13 @@ export default function Footer() {
                   href="#insurance"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Maritime Insurance
                 </Link>
               </li>
               <li>
                 <Link href="#law" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Maritime Law
                 </Link>
               </li>
@@ -80,7 +86,7 @@ export default function Footer() {
                   href="#navigation"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Navigation Consulting
                 </Link>
               </li>
@@ -89,7 +95,7 @@ export default function Footer() {
                   href="#safety"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Safety Management
                 </Link>
               </li>
@@ -110,31 +116,31 @@ export default function Footer() {
                   href="#circulars"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Circulars & Endorsements
                 </Link>
               </li>
               <li>
                 <Link href="#news" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   News & Updates
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Case Studies
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   Industry Reports
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
-                  <span className="mr-2">›</span>
+                  <ChevronRight className="h-4 w-4 mr-2" />
                   FAQ
                 </Link>
               </li>
@@ -177,7 +183,7 @@ export default function Footer() {
                   placeholder="Your email"
                   className="bg-black-800 text-white px-3 py-2 rounded-l-lg flex-1 outline-none border border-black-700 focus:border-orange-500"
                 />
-                <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-r-lg transition-colors">
+                <button className="btn-orange-cosmic rounded-l-none rounded-r-lg">
                   Subscribe
                 </button>
               </div>

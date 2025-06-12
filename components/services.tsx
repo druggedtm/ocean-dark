@@ -64,7 +64,7 @@ export default function Services() {
       title: "Classification Assistance Services",
       description:
         "Helping ship owners comply with classification society requirements and statutory regulations to ensure seamless operations.",
-      icon: <Award className="h-12 w-12 text-orange-500 group-hover:text-white transition-colors duration-300" />,
+      icon: <Award className="h-12 w-12 text-orange-500 group-hover:text-orange-600 transition-colors duration-300" />,
       details: [
         "Classification society compliance assistance",
         "Statutory regulation guidance",
@@ -83,7 +83,7 @@ export default function Services() {
     {
       title: "Technical Advisory & Solutions",
       description: "Providing cost-effective technical and mechanical repair solutions for vessels globally.",
-      icon: <Wrench className="h-12 w-12 text-orange-500 group-hover:text-white transition-colors duration-300" />,
+      icon: <Wrench className="h-12 w-12 text-orange-500 group-hover:text-orange-600 transition-colors duration-300" />,
       details: [
         "Technical troubleshooting and problem-solving",
         "Mechanical repair solutions",
@@ -103,7 +103,7 @@ export default function Services() {
       title: "Ship Surveys",
       description:
         "Conducting On-Hire/Off-Hire surveys, bunker surveys, cargo quantity surveys, and pre-purchase inspections.",
-      icon: <Search className="h-12 w-12 text-orange-500 group-hover:text-white transition-colors duration-300" />,
+      icon: <Search className="h-12 w-12 text-orange-500 group-hover:text-orange-600 transition-colors duration-300" />,
       details: [
         "On-Hire/Off-Hire surveys",
         "Bunker quantity and quality surveys",
@@ -123,7 +123,7 @@ export default function Services() {
       title: "Tank Cleaning & Hold Cleaning Services",
       description:
         "Offering bulk carrier cargo hold cleaning and oil tanker grade change services at major ports in UAE and Oman.",
-      icon: <Droplets className="h-12 w-12 text-orange-500 group-hover:text-white transition-colors duration-300" />,
+      icon: <Droplets className="h-12 w-12 text-orange-500 group-hover:text-orange-600 transition-colors duration-300" />,
       details: [
         "Bulk carrier cargo hold cleaning",
         "Oil tanker grade change services",
