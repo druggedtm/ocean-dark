@@ -35,9 +35,9 @@ const RealisticOceanBackground = () => {
       uniform vec4 iMouse;
       out vec4 fragColor;
 
-      #define OCTAVES  8
-      #define MAX_STEPS  64
-      #define THRESHOLD .0001
+      #define OCTAVES  5          // ↓ fewer octaves ⇒ cheaper noise
+      #define MAX_STEPS  32       // ↓ fewer ray-march steps
+      #define THRESHOLD .001      // ↑ looser hit-threshold => fewer iterations
       #define SHARP_MODE 0 // Just for fun.
 
       float rand(vec2 co){
