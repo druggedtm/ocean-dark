@@ -24,6 +24,8 @@
     --input: 210 50% 88%;
     /* --ring: 270 80% 65%; Brighter purple for rings */
     --radius: 0.5rem;
+    /* Custom brand orange (approx Tailwind orange-600 #EA580C) */
+    --orange-custom: 25 95% 53%;
   }
 
   .dark {
@@ -46,6 +48,8 @@
     --border: 270 50% 20%; /* Darker purple for borders */
     --input: 270 50% 25%;
     --ring: 300 100% 75%; /* Brighter magenta for rings */
+    /* Keep the same orange for dark mode ‑ looks good on both */
+    --orange-custom: 25 95% 53%;
   }
 }
 
@@ -319,6 +323,18 @@
 
 .btn-outline-cosmic {
   @apply bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground font-medium py-3 px-6 rounded-lg transition-all duration-300;
+}
+
+/* Orange button variant */
+.btn-orange-cosmic {
+  /* structural utilities copied from primary */
+  @apply text-primary-foreground font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:-translate-y-1;
+  background-color: hsl(var(--orange-custom));
+}
+.btn-orange-cosmic:hover {
+  background-color: hsl(var(--orange-custom) / 0.8);
+  box-shadow: 0 10px 15px -3px hsl(var(--orange-custom) / 0.5),
+              0 4px 6px -4px  hsl(var(--orange-custom) / 0.5);
 }
 
 /* New Animations */

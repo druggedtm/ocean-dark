@@ -79,7 +79,7 @@ export default function Hero() {
             End-to-end technical supervision, compliance, and operational support for ship owners and managers worldwide.
           </p>
           <div className="hero-cta flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="btn-primary-cosmic">
+            <Button size="lg" className="btn-orange-cosmic">
               <Rocket className="mr-2 h-5 w-5" />
               Get Started
             </Button>
