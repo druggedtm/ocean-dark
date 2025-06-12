@@ -137,9 +137,7 @@ export default function ContactCTA() {
         </div>
       </div>
       {/* Wave Canvas Component */}
-      <div className="absolute inset-0 z-0">
-        <WaveCanvas />
-      </div>
+   
 
     </section>
 
