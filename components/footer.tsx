@@ -1,6 +1,5 @@
 import Link from "next/link"
 import {
-  Anchor,
   Mail,
   Phone,
   MapPin,
@@ -59,7 +58,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link
-                  href="#technical"
+                  href="/technical-supervision"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
                   <ChevronRight className="h-4 w-4 mr-2" />
@@ -68,7 +67,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#insurance"
+                  href="/maritime-insurance"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
                   <ChevronRight className="h-4 w-4 mr-2" />
@@ -76,14 +75,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#law" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
+                <Link href="/maritime-law" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
                   <ChevronRight className="h-4 w-4 mr-2" />
                   Maritime Law
                 </Link>
               </li>
               <li>
                 <Link
-                  href="#navigation"
+                  href="/navigation-consulting"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
                   <ChevronRight className="h-4 w-4 mr-2" />
@@ -92,7 +91,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#safety"
+                  href="/safety-management"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
                   <ChevronRight className="h-4 w-4 mr-2" />
@@ -113,7 +112,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link
-                  href="#circulars"
+                  href="/circulars&endorsement"
                   className="text-slate-400 hover:text-orange-500 transition-colors flex items-center"
                 >
                   <ChevronRight className="h-4 w-4 mr-2" />
@@ -121,25 +120,25 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#news" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
+                <Link href="/news&updates" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
                   <ChevronRight className="h-4 w-4 mr-2" />
                   News & Updates
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
+                <Link href="/case-studies" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
                   <ChevronRight className="h-4 w-4 mr-2" />
                   Case Studies
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
+                <Link href="/industry-reports" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
                   <ChevronRight className="h-4 w-4 mr-2" />
                   Industry Reports
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
+                <Link href="/faq" className="text-slate-400 hover:text-orange-500 transition-colors flex items-center">
                   <ChevronRight className="h-4 w-4 mr-2" />
                   FAQ
                 </Link>
