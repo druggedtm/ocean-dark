@@ -309,7 +309,7 @@ const RealisticOceanBackground = () => {
       glCtx.shaderSource(shader, source)
       glCtx.compileShader(shader)
       if (!glCtx.getShaderParameter(shader, glCtx.COMPILE_STATUS)) {
-        const shaderType = type === gl.VERTEX_SHADER ? "Vertex" : "Fragment"
+        const shaderType = type === glCtx.VERTEX_SHADER ? "Vertex" : "Fragment"
         console.error(`ERROR compiling ${shaderType} shader:`, glCtx.getShaderInfoLog(shader))
         glCtx.deleteShader(shader)
         return null
@@ -332,8 +332,12 @@ const RealisticOceanBackground = () => {
         return null
       }
       glCtx.validateProgram(program);
-      if (!glCtx.getProgramParameter(program, gl.VALIDATE_STATUS)) {
-        console.error('ERROR validating program:', glCtx.getProgramInfoLog(program));
+      if (gl !== null && gl !== undefined) {
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
+        // ...
+      } else {
+        console.error("WebGL context is null or undefined.")
       }
       return program
     }
@@ -342,14 +346,14 @@ const RealisticOceanBackground = () => {
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
 
     if (!vertexShader || !fragmentShader) {
-        console.error("Shader creation failed. Aborting.")
-        return
+      console.error("Shader creation failed. Aborting.")
+      return
     }
 
     const program = createProgram(gl, vertexShader, fragmentShader)
     if (!program) {
-        console.error("Program creation failed. Aborting.")
-        return
+      console.error("Program creation failed. Aborting.")
+      return
     }
 
     const positionAttributeLocation = gl.getAttribLocation(program, "aPosition")
@@ -364,21 +368,21 @@ const RealisticOceanBackground = () => {
     gl.useProgram(program)
 
     gl.enableVertexAttribArray(positionAttributeLocation)
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer) 
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0)
 
     let mouseX = 0, mouseY = 0, mouseClickX = 0, mouseClickY = 0;
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX 
+      mouseX = e.clientX
       mouseY = canvas.height - e.clientY
     };
     const handleMouseDown = (e: MouseEvent) => {
-        mouseClickX = e.clientX;
-        mouseClickY = canvas.height - e.clientY;
+      mouseClickX = e.clientX;
+      mouseClickY = canvas.height - e.clientY;
     }
-     const handleMouseUp = (e: MouseEvent) => {
-        mouseClickX = -Math.abs(mouseClickX); 
-        mouseClickY = -Math.abs(mouseClickY);
+    const handleMouseUp = (e: MouseEvent) => {
+      mouseClickX = -Math.abs(mouseClickX);
+      mouseClickY = -Math.abs(mouseClickY);
     }
 
     canvas.addEventListener("mousemove", handleMouseMove);
@@ -387,11 +391,11 @@ const RealisticOceanBackground = () => {
 
     function resizeCanvas() {
       if (!canvas || !gl) return
-      const displayWidth  = canvas.clientWidth;
+      const displayWidth = canvas.clientWidth;
       const displayHeight = canvas.clientHeight;
 
-      if (canvas.width  !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width  = displayWidth;
+      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
         canvas.height = displayHeight;
         gl.viewport(0, 0, canvas.width, canvas.height)
       }
@@ -400,23 +404,23 @@ const RealisticOceanBackground = () => {
         mouseY = canvas.height / 2
       }
     }
-    
+
     window.addEventListener("resize", resizeCanvas)
     resizeCanvas()
 
     let startTime = Date.now();
 
     function renderLoop() {
-      if (!gl || !program) { 
+      if (!gl || !program) {
         if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current)
         return
       }
-      
-      resizeCanvas(); 
+
+      resizeCanvas();
 
       const currentTime = (Date.now() - startTime) * 0.001
 
-      gl.useProgram(program); 
+      gl.useProgram(program);
       gl.uniform3f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height, 1.0)
       gl.uniform1f(timeUniformLocation, currentTime)
       gl.uniform4f(mouseUniformLocation, mouseX, mouseY, mouseClickX, mouseClickY)
@@ -438,7 +442,7 @@ const RealisticOceanBackground = () => {
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mousedown", handleMouseDown);
       canvas.removeEventListener("mouseup", handleMouseUp);
-      
+
       if (gl) {
         if (program) gl.deleteProgram(program)
         if (vertexShader) gl.deleteShader(vertexShader)
